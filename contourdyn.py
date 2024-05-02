@@ -10,6 +10,10 @@ Based on contour dynamics toy model from Darryn Waugh.
 import numpy as np
 import matplotlib.pyplot as plt
 
+
+###########################
+## Run options
+
 # itest defines the situation simulated
 # 1 one elliptical eddy of axes ration rat = b/a
 # 2 three cocentric elliptical eddies  of axes ratio rat = b/a
@@ -19,6 +23,8 @@ import matplotlib.pyplot as plt
 itest = 5
 
 # plot options
+do_interactive = True # show plots as script runs
+verbose = True # print out extra information
 label_patches = True # label vortex patch number
 label_0_point = True # show a stationary point on the contour
 show_points = True # show all of the points in the contour
@@ -30,11 +36,15 @@ print_time = True # show time on plot
 time_as_steps = False # show time as timesteps not MM:SS
 save_to_png = True # save plots as png files
 
+# define some other things
 # colors of patches
 mycol = ['r', 'b', 'g', 'gray', 'pink']
 
 # time variable
 t = 0
+
+###########################
+## Define scenarios
 
 if itest == 1:
     # one elliptical eddy of axes ratio rat = b/a
@@ -411,8 +421,10 @@ isClosed = IsClosed()
 
 # close any existing figures
 plt.close('all')
-if not plt.isinteractive():
+if do_interactive:
     plt.ion()
+else:
+    plt.ioff()
 
 # make figure
 fig = plt.figure()
@@ -504,6 +516,9 @@ for n in range(0,ntot+1):
 
     # Once in a while make a nice plot
     if n % nfreq == 0:
+        if verbose:
+            print(f"t = {t}")
+
         xall[:,:,n//nfreq] = x
         yall[:,:,n//nfreq] = y
         i = n//nfreq
@@ -593,7 +608,8 @@ for n in range(0,ntot+1):
             txt = ax.text(0.98, 0.03, ttxt, transform=ax.transAxes, horizontalalignment='right')
         if save_to_png:
             ax.figure.savefig(f"i{itest}-step{n:06d}.png", dpi=150)
-        plt.pause(0.01)
+        if do_interactive:
+            plt.pause(0.01)
         #input(t)
         
 print('done')
