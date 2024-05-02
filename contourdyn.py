@@ -1,6 +1,11 @@
-"""contourdyn calculates contour dynamics
+"""script that calculate contour dynamics
 Requires numpy and matplotlib.
-For interactive plots macos install Python.app."""
+For interactive plots macos install Python.app.
+
+Based on contour dynamics toy model from Darryn Waugh.
+
+2022 LE Hanson
+"""
 
 import numpy as np
 import matplotlib.pyplot as plt
